@@ -5,7 +5,7 @@ onChange = onChange || (() => {});
 const columnsVisibility = JSON.parse(
   Storage.get(
     "COLUMNS_VISIBLILITY",
-    `${REPL_BASE_DEPLOYMENT_ACCOUNT}/widget/components.SettingsDropdown`
+    `${REPL_BASE_DEPLOYMENT_ACCOUNT}/widget/pages.asset-exchange.SettingsDropdown`
   ) ?? "[]"
 );
 
@@ -22,27 +22,15 @@ const [settingsOptions, setSettingsOptions] = useState(
           show: true,
         },
         {
-          title: "Reference",
+          title: "Send",
           show: true,
         },
         {
-          title: "Title",
+          title: "Receive",
           show: true,
         },
         {
-          title: "Summary",
-          show: true,
-        },
-        {
-          title: "Recipient",
-          show: true,
-        },
-        {
-          title: "Requested Token",
-          show: true,
-        },
-        {
-          title: "Funding Ask",
+          title: "Slippage Limit",
           show: true,
         },
         {
@@ -157,8 +145,13 @@ return (
           <div>
             <div className="text-muted text-sm">Shown in table</div>
             {settingsOptions.map((option) => {
-              // hide Expiring Date for history page
-              if (!isPendingPage && option.title === "Expiring Date") {
+              // hide certain items for history page
+              if (
+                !isPendingPage &&
+                (option.title === "Expiring Date" ||
+                  option.title === "Required Votes" ||
+                  option.title === "Votes")
+              ) {
                 return;
               }
               return (
